@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.MainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-04-19T05:29:30" hostname="minjaeui-MacBookAir.local" time="0.026">
+  <properties/>
+  <testcase name="재고 부족 테스트" classname="com.example.MainTest" time="0.023"/>
+  <testcase name="상품별 판매 금액 조회 테스트()" classname="com.example.MainTest" time="0.001"/>
+  <testcase name="주문 성공 테스트" classname="com.example.MainTest" time="0.001"/>
+  <testcase name="주문 취소 테스트()" classname="com.example.MainTest" time="0.001"/>
+  <testcase name="주문 부분취소 테스트()" classname="com.example.MainTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
