@@ -2,7 +2,6 @@ package com.example
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.DisplayName
 import org.assertj.core.api.Assertions.assertThat
 import io.mockk.*
 import io.mockk.junit5.MockKExtension
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import com.example.domain.Order
 import com.example.domain.OrderUseCase
 import com.example.domain.InventoryUseCase
+import com.example.domain.SalesUseCase
 import com.example.presentation.OrderService
 
 /*
@@ -20,17 +20,18 @@ import com.example.presentation.OrderService
 class OrderServiceTest {
     private lateinit var orderUseCase: OrderUseCase
     private lateinit var inventoryUseCase: InventoryUseCase
+    private lateinit var salesUseCase: SalesUseCase
     private lateinit var orderService: OrderService
 
     @BeforeEach
     fun setUp() {
         orderUseCase = mockk()
         inventoryUseCase = mockk()
-        orderService = OrderService(orderUseCase, inventoryUseCase)
+        salesUseCase = mockk()
+        orderService = OrderService(orderUseCase, inventoryUseCase, salesUseCase)
     }
 
     @Test
-    @DisplayName("주문 요청 테스트")
     fun `주문 요청이 성공적으로 처리된다`() {
         // given
         val order = Order("NIKE0001", 3)
@@ -44,7 +45,6 @@ class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("재고 확인 테스트")
     fun `재고 확인이 성공적으로 처리된다`() {
         // given
         val itemId = "NIKE0001"
@@ -60,7 +60,6 @@ class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("주문 취소 테스트")
     fun `주문 취소가 성공적으로 처리된다`() {
         // given
         val order = Order("NIKE0001", 3)
@@ -74,7 +73,6 @@ class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("주문 부분 취소 테스트")
     fun `주문 부분 취소가 성공적으로 처리된다`() {
         // given
         val order = Order("NIKE0001", 2)
@@ -85,5 +83,34 @@ class OrderServiceTest {
         
         // then
         verify(exactly = 1) { orderUseCase.partialCancelOrder(order) }
+    }
+
+    @Test
+    fun `특정 상품의 총 판매 금액 조회가 성공적으로 처리된다`() {
+        // given
+        val itemId = "NIKE0001"
+        val expectedAmount = 500000L
+        every { salesUseCase.getTotalSalesByItem(itemId) } returns expectedAmount
+        
+        // when
+        val actualAmount = orderService.getTotalSalesByItem(itemId)
+        
+        // then
+        assertThat(actualAmount).isEqualTo(expectedAmount)
+        verify(exactly = 1) { salesUseCase.getTotalSalesByItem(itemId) }
+    }
+
+    @Test
+    fun `전체 판매 금액 조회가 성공적으로 처리된다`() {
+        // given
+        val expectedSales = mapOf("NIKE0001" to 500000L, "ADIDAS0001" to 300000L)
+        every { salesUseCase.getAllSales() } returns expectedSales
+        
+        // when
+        val actualSales = orderService.getAllSales()
+        
+        // then
+        assertThat(actualSales).isEqualTo(expectedSales)
+        verify(exactly = 1) { salesUseCase.getAllSales() }
     }
 } 

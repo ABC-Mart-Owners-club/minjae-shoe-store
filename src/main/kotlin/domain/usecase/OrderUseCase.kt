@@ -3,17 +3,23 @@ package com.example.domain
 import com.example.domain.TradeRepository
 import com.example.domain.Order
 
-class OrderUseCase(private val tradeRepository: TradeRepository) {
+interface OrderUseCase {
+    fun requestOrder(order: Order)
+    fun cancelOrder(order: Order)
+    fun partialCancelOrder(order: Order)
+}
+
+class DefaultOrderUseCase(private val tradeRepository: TradeRepository) : OrderUseCase {
     
-    fun requestOrder(order: Order) {    
+    override fun requestOrder(order: Order) {    
         tradeRepository.requestOrder(order)
     }
 
-    fun cancelOrder(order: Order) {
+    override fun cancelOrder(order: Order) {
         tradeRepository.cancelOrder(order)
     }
 
-    fun partialCancelOrder(order: Order) {
+    override fun partialCancelOrder(order: Order) {
         tradeRepository.partialCancelOrder(order)
     }
 }

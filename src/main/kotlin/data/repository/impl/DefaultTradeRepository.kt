@@ -1,25 +1,31 @@
 package com.example.data
 
 import com.example.data.ShoeStoreStorage
+import com.example.data.mapper.OrderMapper
 import com.example.domain.Order
 import com.example.domain.TradeRepository
 
-public class DefaultTradeRepository(inventory: ShoeStoreStorage) : TradeRepository {
-    private val inventory: ShoeStoreStorage = inventory
+class DefaultTradeRepository(
+    private val storage: ShoeStoreStorage,
+    private val orderMapper: OrderMapper = OrderMapper()
+) : TradeRepository {
 
     override fun requestOrder(order: Order) {
-        inventory.substractItem(order.id, order.quantity)
+        val orderEntity = orderMapper.toEntity(order)
+        storage.substractItem(orderEntity.itemId, orderEntity.quantity)
     }
 
     override fun cancelOrder(order: Order) {
-        inventory.addItem(order.id, order.quantity)
+        val orderEntity = orderMapper.toEntity(order)
+        storage.addItem(orderEntity.itemId, orderEntity.quantity)
     }
 
     override fun partialCancelOrder(order: Order) {
-        inventory.addItem(order.id, order.quantity)
+        val orderEntity = orderMapper.toEntity(order)
+        storage.addItem(orderEntity.itemId, orderEntity.quantity)
     }
 
-    public override fun checkInventory(id: String): Int {
-        return inventory.checkInventory(id)
+    override fun checkInventory(id: String): Int {
+        return storage.checkInventory(id)
     }
 }

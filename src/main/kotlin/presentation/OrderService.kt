@@ -3,11 +3,13 @@ package com.example.presentation
 import com.example.domain.Order
 import com.example.domain.OrderUseCase
 import com.example.domain.InventoryUseCase
+import com.example.domain.SalesUseCase
 
 class OrderService(
-    val orderUseCase: OrderUseCase,
-    val inventoryUseCase: InventoryUseCase
-    ) {
+    private val orderUseCase: OrderUseCase,
+    private val inventoryUseCase: InventoryUseCase,
+    private val salesUseCase: SalesUseCase
+) {
 
     fun requestOrder(order: Order) {
         orderUseCase.requestOrder(order)
@@ -23,5 +25,13 @@ class OrderService(
 
     fun partialCancelOrder(order: Order) {
         orderUseCase.partialCancelOrder(order)
+    }
+    
+    fun getTotalSalesByItem(itemId: String): Long {
+        return salesUseCase.getTotalSalesByItem(itemId)
+    }
+    
+    fun getAllSales(): Map<String, Long> {
+        return salesUseCase.getAllSales()
     }
 }
