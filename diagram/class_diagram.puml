@@ -80,8 +80,8 @@ package "Domain Layer" {
   ' 리포지토리 인터페이스
   package "Repository Interface" {
     interface TradeRepository {
-      + requestOrder(order: Order): Boolean
-      + cancelOrder(order: Order): Boolean
+      + saledItem(order: Order): Boolean
+      + canceledItem(order: Order): Boolean
       + checkInventory(id: String): Int
     }
     

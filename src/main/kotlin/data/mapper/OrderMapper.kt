@@ -14,4 +14,4 @@ class OrderMapper {
             quantity = domain.quantity
         )
     }
-} 
+}

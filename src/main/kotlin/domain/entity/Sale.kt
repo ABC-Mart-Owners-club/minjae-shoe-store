@@ -19,4 +19,4 @@ data class Sale(
     val price: Long,
     val totalAmount: Long = quantity * price,
     val timestamp: LocalDateTime = LocalDateTime.now()
-) 
+)

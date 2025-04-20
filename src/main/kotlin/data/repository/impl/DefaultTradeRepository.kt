@@ -10,12 +10,12 @@ class DefaultTradeRepository(
     private val orderMapper: OrderMapper = OrderMapper()
 ) : TradeRepository {
 
-    override fun requestOrder(order: Order) {
+    override fun saledItem(order: Order) {
         val orderEntity = orderMapper.toEntity(order)
         storage.substractItem(orderEntity.itemId, orderEntity.quantity)
     }
 
-    override fun cancelOrder(order: Order) {
+    override fun canceledItem(order: Order) {
         val orderEntity = orderMapper.toEntity(order)
         storage.addItem(orderEntity.itemId, orderEntity.quantity)
     }

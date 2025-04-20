@@ -22,26 +22,26 @@ class OrderUseCaseTest {
     fun `주문 요청 시 저장소에 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        every { tradeRepository.requestOrder(order) } just Runs
+        every { tradeRepository.saledItem(order) } just Runs
         
         // when
         orderUseCase.requestOrder(order)
         
         // then
-        verify(exactly = 1) { tradeRepository.requestOrder(order) }
+        verify(exactly = 1) { tradeRepository.saledItem(order) }
     }
     
     @Test
     fun `주문 취소 시 저장소에 취소 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        every { tradeRepository.cancelOrder(order) } just Runs
+        every { tradeRepository.canceledItem(order) } just Runs
         
         // when
         orderUseCase.cancelOrder(order)
         
         // then
-        verify(exactly = 1) { tradeRepository.cancelOrder(order) }
+        verify(exactly = 1) { tradeRepository.canceledItem(order) }
     }
     
     @Test

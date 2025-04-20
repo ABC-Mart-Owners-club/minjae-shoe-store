@@ -24,7 +24,7 @@ class DefaultTradeRepositoryTest {
     }
     
     @Test
-    fun `주문 요청 시 스토리지에 재고 감소 요청이 전달된다`() {
+    fun `상품 판매 시 스토리지에 재고 감소 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
         val orderEntity = com.example.data.model.OrderEntity(
@@ -36,7 +36,7 @@ class DefaultTradeRepositoryTest {
         every { storage.substractItem(orderEntity.itemId, orderEntity.quantity) } returns true
         
         // when
-        repository.requestOrder(order)
+        repository.saledItem(order)
         
         // then
         verify(exactly = 1) { orderMapper.toEntity(order) }
@@ -44,7 +44,7 @@ class DefaultTradeRepositoryTest {
     }
     
     @Test
-    fun `주문 취소 시 스토리지에 재고 증가 요청이 전달된다`() {
+    fun `상품 취소 시 스토리지에 재고 증가 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
         val orderEntity = com.example.data.model.OrderEntity(
@@ -56,7 +56,7 @@ class DefaultTradeRepositoryTest {
         every { storage.addItem(orderEntity.itemId, orderEntity.quantity) } returns true
         
         // when
-        repository.cancelOrder(order)
+        repository.canceledItem(order)
         
         // then
         verify(exactly = 1) { orderMapper.toEntity(order) }

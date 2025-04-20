@@ -12,11 +12,11 @@ interface OrderUseCase {
 class DefaultOrderUseCase(private val tradeRepository: TradeRepository) : OrderUseCase {
     
     override fun requestOrder(order: Order) {    
-        tradeRepository.requestOrder(order)
+        tradeRepository.saledItem(order)
     }
 
     override fun cancelOrder(order: Order) {
-        tradeRepository.cancelOrder(order)
+        tradeRepository.canceledItem(order)
     }
 
     override fun partialCancelOrder(order: Order) {
