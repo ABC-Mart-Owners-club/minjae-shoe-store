@@ -1,10 +1,9 @@
-package domain.repository
+package domain.usecase.`interface`
 
 import domain.entity.Order
 
-interface TradeRepository {
+interface OrderUseCase {
     fun sale(order: Order)
     fun cancel(order: Order)
     fun partialCancel(order: Order)
-    fun checkInventory(id: String): Int
 }

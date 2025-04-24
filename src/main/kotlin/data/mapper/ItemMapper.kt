@@ -1,8 +1,8 @@
-package com.example.data.mapper
+package data.mapper
 
-import com.example.data.model.ItemEntity
-import com.example.domain.Item
-import com.example.domain.ShoeBrand
+import data.model.ItemEntity
+import domain.entity.Item
+import domain.entity.ShoeBrand
 
 class ItemMapper {
     fun toDomain(entity: ItemEntity): Item {

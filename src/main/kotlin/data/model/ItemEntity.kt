@@ -1,4 +1,4 @@
-package com.example.data.model
+package data.model
 
 data class ItemEntity(
     val id: String,

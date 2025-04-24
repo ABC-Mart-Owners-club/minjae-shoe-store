@@ -1,8 +1,7 @@
-package com.example.data.mapper
+package data.mapper
 
-import com.example.data.model.SaleEntity
-import com.example.domain.Sale
-import java.util.UUID
+import data.model.SaleEntity
+import domain.entity.Sale
 
 class SaleMapper {
     fun toEntity(domain: Sale): SaleEntity {

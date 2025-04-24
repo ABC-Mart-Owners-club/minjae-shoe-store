@@ -1,17 +1,14 @@
-package com.example.data
+package data
 
-import com.example.domain.Item
-import com.example.data.Storage
+import data.Storage
 
-class ShoeStoreStorage(inventory: MutableMap<String, Int>): Storage {
-    private val inventory: MutableMap<String, Int> = inventory
-    
+class ShoeStoreStorage(private val inventory: MutableMap<String, Int>): Storage {
     override fun addItem(id: String, quantity: Int): Boolean {
         inventory[id] = inventory[id]?.plus(quantity) ?: quantity
         return true
     }
 
-    override fun substractItem(id: String, quantity: Int): Boolean {
+    override fun subtractItem(id: String, quantity: Int): Boolean {
         if (inventory[id] == null || inventory[id]!! < quantity) {
             return false
         }

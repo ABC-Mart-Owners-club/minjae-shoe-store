@@ -1,7 +1,10 @@
 package com.example.data
 
-import com.example.data.mapper.OrderMapper
-import com.example.domain.Order
+import data.ShoeStoreStorage
+import data.mapper.OrderMapper
+import data.model.OrderEntity
+import data.repository.DefaultTradeRepository
+import domain.entity.Order
 import io.mockk.*
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.BeforeEach
@@ -27,27 +30,27 @@ class DefaultTradeRepositoryTest {
     fun `상품 판매 시 스토리지에 재고 감소 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        val orderEntity = com.example.data.model.OrderEntity(
+        val orderEntity = OrderEntity(
             itemId = "NIKE0001",
             quantity = 3
         )
         
         every { orderMapper.toEntity(order) } returns orderEntity
-        every { storage.substractItem(orderEntity.itemId, orderEntity.quantity) } returns true
+        every { storage.subtractItem(orderEntity.itemId, orderEntity.quantity) } returns true
         
         // when
-        repository.saledItem(order)
+        repository.sale(order)
         
         // then
         verify(exactly = 1) { orderMapper.toEntity(order) }
-        verify(exactly = 1) { storage.substractItem(orderEntity.itemId, orderEntity.quantity) }
+        verify(exactly = 1) { storage.subtractItem(orderEntity.itemId, orderEntity.quantity) }
     }
     
     @Test
     fun `상품 취소 시 스토리지에 재고 증가 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        val orderEntity = com.example.data.model.OrderEntity(
+        val orderEntity = OrderEntity(
             itemId = "NIKE0001",
             quantity = 3
         )
@@ -56,7 +59,7 @@ class DefaultTradeRepositoryTest {
         every { storage.addItem(orderEntity.itemId, orderEntity.quantity) } returns true
         
         // when
-        repository.canceledItem(order)
+        repository.cancel(order)
         
         // then
         verify(exactly = 1) { orderMapper.toEntity(order) }

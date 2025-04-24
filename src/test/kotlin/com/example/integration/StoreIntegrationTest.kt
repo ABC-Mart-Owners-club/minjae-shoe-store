@@ -1,16 +1,16 @@
 package com.example.integration
 
-import com.example.data.DefaultSaleRepository
-import com.example.data.DefaultTradeRepository
-import com.example.data.ShoeStoreStorage
-import com.example.data.mapper.OrderMapper
+import data.repository.DefaultSaleRepository
+import data.repository.DefaultTradeRepository
+import data.ShoeStoreStorage
+import data.mapper.OrderMapper
 import com.example.domain.DefaultInventoryUseCase
-import com.example.domain.DefaultOrderUseCase
-import com.example.domain.DefaultSalesUseCase
-import com.example.domain.Item
-import com.example.domain.Order
-import com.example.domain.ShoeBrand
-import com.example.presentation.OrderService
+import domain.usecase.DefaultOrderUseCase
+import domain.usecase.DefaultSalesUseCase
+import domain.entity.Item
+import domain.entity.Order
+import domain.entity.ShoeBrand
+import presentation.OrderService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat

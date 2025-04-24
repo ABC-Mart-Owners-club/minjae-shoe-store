@@ -1,5 +1,7 @@
 package com.example.domain
 
+import domain.repository.TradeRepository
+import domain.usecase.`interface`.InventoryUseCase
 import io.mockk.*
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.BeforeEach

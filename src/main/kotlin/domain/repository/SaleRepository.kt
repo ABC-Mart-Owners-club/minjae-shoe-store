@@ -1,4 +1,6 @@
-package com.example.domain
+package domain.repository
+
+import domain.entity.Sale
 
 /**
  * 판매 내역 관리를 위한 리포지토리 인터페이스

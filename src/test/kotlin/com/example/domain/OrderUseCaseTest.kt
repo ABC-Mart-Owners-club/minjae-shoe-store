@@ -1,5 +1,9 @@
 package com.example.domain
 
+import domain.entity.Order
+import domain.repository.TradeRepository
+import domain.usecase.DefaultOrderUseCase
+import domain.usecase.`interface`.OrderUseCase
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -22,38 +26,38 @@ class OrderUseCaseTest {
     fun `주문 요청 시 저장소에 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        every { tradeRepository.saledItem(order) } just Runs
+        every { tradeRepository.sale(order) } just Runs
         
         // when
-        orderUseCase.requestOrder(order)
+        orderUseCase.sale(order)
         
         // then
-        verify(exactly = 1) { tradeRepository.saledItem(order) }
+        verify(exactly = 1) { tradeRepository.sale(order) }
     }
     
     @Test
     fun `주문 취소 시 저장소에 취소 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        every { tradeRepository.canceledItem(order) } just Runs
+        every { tradeRepository.cancel(order) } just Runs
         
         // when
-        orderUseCase.cancelOrder(order)
+        orderUseCase.cancel(order)
         
         // then
-        verify(exactly = 1) { tradeRepository.canceledItem(order) }
+        verify(exactly = 1) { tradeRepository.cancel(order) }
     }
     
     @Test
     fun `주문 부분 취소 시 저장소에 부분 취소 요청이 전달된다`() {
         // given
         val order = Order("NIKE0001", 2)
-        every { tradeRepository.partialCancelOrder(order) } just Runs
+        every { tradeRepository.partialCancel(order) } just Runs
         
         // when
-        orderUseCase.partialCancelOrder(order)
+        orderUseCase.partialCancel(order)
         
         // then
-        verify(exactly = 1) { tradeRepository.partialCancelOrder(order) }
+        verify(exactly = 1) { tradeRepository.partialCancel(order) }
     }
 } 

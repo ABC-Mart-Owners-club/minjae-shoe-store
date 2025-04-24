@@ -1,7 +1,7 @@
-package com.example.data.mapper
+package data.mapper
 
-import com.example.data.model.OrderEntity
-import com.example.domain.Order
+import data.model.OrderEntity
+import domain.entity.Order
 
 class OrderMapper {
     fun toDomain(entity: OrderEntity): Order {

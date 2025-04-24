@@ -1,5 +1,8 @@
 package com.example.domain
 
+import domain.entity.Order
+import domain.repository.SaleRepository
+import domain.usecase.DefaultSalesUseCase
 import io.mockk.*
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.BeforeEach

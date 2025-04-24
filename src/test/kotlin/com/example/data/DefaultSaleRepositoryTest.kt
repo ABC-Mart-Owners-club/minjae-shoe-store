@@ -1,9 +1,10 @@
 package com.example.data
 
+import data.repository.DefaultSaleRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
-import com.example.domain.Sale
+import domain.entity.Sale
 import java.util.UUID
 
 class DefaultSaleRepositoryTest {

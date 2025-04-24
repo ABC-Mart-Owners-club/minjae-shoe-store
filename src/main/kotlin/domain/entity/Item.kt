@@ -1,4 +1,4 @@
-package com.example.domain
+package domain.entity
 
 class Item (id: String, name: String, price: Long, brand: ShoeBrand) {
     val id: String = id

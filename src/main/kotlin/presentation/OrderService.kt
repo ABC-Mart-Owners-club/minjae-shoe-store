@@ -1,9 +1,9 @@
-package com.example.presentation
+package presentation
 
-import com.example.domain.Order
-import com.example.domain.OrderUseCase
-import com.example.domain.InventoryUseCase
-import com.example.domain.SalesUseCase
+import domain.usecase.`interface`.OrderUseCase
+import domain.entity.Order
+import domain.usecase.`interface`.InventoryUseCase
+import domain.usecase.`interface`.SalesUseCase
 
 class OrderService(
     private val orderUseCase: OrderUseCase,
@@ -12,7 +12,7 @@ class OrderService(
 ) {
 
     fun requestOrder(order: Order) {
-        orderUseCase.requestOrder(order)
+        orderUseCase.sale(order)
     }
 
     fun checkInventory(id: String): Int {
@@ -20,11 +20,11 @@ class OrderService(
     }
 
     fun cancelOrder(order: Order) {
-        orderUseCase.cancelOrder(order)
+        orderUseCase.cancel(order)
     }
 
     fun partialCancelOrder(order: Order) {
-        orderUseCase.partialCancelOrder(order)
+        orderUseCase.partialCancel(order)
     }
     
     fun getTotalSalesByItem(itemId: String): Long {

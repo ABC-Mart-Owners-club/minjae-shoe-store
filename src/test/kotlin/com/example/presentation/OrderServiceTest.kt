@@ -7,11 +7,11 @@ import io.mockk.*
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.extension.ExtendWith
 
-import com.example.domain.Order
-import com.example.domain.OrderUseCase
-import com.example.domain.InventoryUseCase
-import com.example.domain.SalesUseCase
-import com.example.presentation.OrderService
+import domain.entity.Order
+import domain.usecase.`interface`.OrderUseCase
+import domain.usecase.`interface`.InventoryUseCase
+import domain.usecase.`interface`.SalesUseCase
+import presentation.OrderService
 
 /*
     gwt(given-when-then) 방식으로 진행
@@ -35,13 +35,13 @@ class OrderServiceTest {
     fun `주문 요청이 성공적으로 처리된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        every { orderUseCase.requestOrder(order) } just Runs
+        every { orderUseCase.sale(order) } just Runs
         
         // when
         orderService.requestOrder(order)
         
         // then
-        verify(exactly = 1) { orderUseCase.requestOrder(order) }
+        verify(exactly = 1) { orderUseCase.sale(order) }
     }
 
     @Test
@@ -63,26 +63,26 @@ class OrderServiceTest {
     fun `주문 취소가 성공적으로 처리된다`() {
         // given
         val order = Order("NIKE0001", 3)
-        every { orderUseCase.cancelOrder(order) } just Runs
+        every { orderUseCase.cancel(order) } just Runs
         
         // when
         orderService.cancelOrder(order)
         
         // then
-        verify(exactly = 1) { orderUseCase.cancelOrder(order) }
+        verify(exactly = 1) { orderUseCase.cancel(order) }
     }
 
     @Test
     fun `주문 부분 취소가 성공적으로 처리된다`() {
         // given
         val order = Order("NIKE0001", 2)
-        every { orderUseCase.partialCancelOrder(order) } just Runs
+        every { orderUseCase.partialCancel(order) } just Runs
         
         // when
         orderService.partialCancelOrder(order)
         
         // then
-        verify(exactly = 1) { orderUseCase.partialCancelOrder(order) }
+        verify(exactly = 1) { orderUseCase.partialCancel(order) }
     }
 
     @Test

@@ -1,8 +1,9 @@
-package com.example.data
+package data.repository
 
-import com.example.data.mapper.SaleMapper
-import com.example.domain.Sale
-import com.example.domain.SaleRepository
+import data.mapper.SaleMapper
+import data.model.SaleEntity
+import domain.entity.Sale
+import domain.repository.SaleRepository
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -13,7 +14,7 @@ class DefaultSaleRepository(
 ) : SaleRepository {
     
     // 일단 메모리에 저장하는 걸로 진행(실제에서는 DB 사용하면 될듯)
-    private val sales = ConcurrentHashMap<String, MutableList<com.example.data.model.SaleEntity>>()
+    private val sales = ConcurrentHashMap<String, MutableList<SaleEntity>>()
     
     override fun recordSale(sale: Sale): Boolean {
         val saleEntity = saleMapper.toEntity(sale)
