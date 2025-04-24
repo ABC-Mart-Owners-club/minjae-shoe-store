@@ -21,6 +21,14 @@ kotlin {
     jvmToolchain(17)
 }
 
+tasks.compileKotlin {
+    kotlinOptions.jvmTarget = "17"
+}
+
+tasks.compileTestKotlin {
+    kotlinOptions.jvmTarget = "17"
+}
+
 application {
     mainClass.set("com.example.MainKt")
 }

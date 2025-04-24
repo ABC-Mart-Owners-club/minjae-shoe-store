@@ -1,0 +1,172 @@
+@startuml Shoe Store Clean Architecture
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+!define LAYOUT_TOP_DOWN
+!define LAYOUT_AS_SKETCH
+
+title "Shoe Store - Clean Architecture"
+
+' 패키지 정의
+package "Presentation Layer" {
+  class OrderService {
+    - orderUseCase: OrderUseCase
+    - inventoryUseCase: InventoryUseCase
+    - salesUseCase: SalesUseCase
+    + requestOrder(order: Order): void
+    + checkInventory(id: String): Intd
+    + cancelOrder(order: Order): void
+    + partialCancelOrder(order: Order): void
+    + getTotalSalesByItem(itemId: String): Long
+    + getAllSales(): Map<String, Long>
+  }
+}
+
+package "Domain Layer" {
+  ' 엔티티
+  package "Entity" {
+    class Order {
+      - id: String
+      - quantity: Int
+    }
+    
+    class Item {
+      - id: String
+      - name: String
+      - price: Long
+    }
+    
+    class Sale {
+      - id: String
+      - itemId: String
+      - quantity: Int
+      - price: Long
+      - totalAmount: Long
+    }
+  }
+  
+  ' 유스케이스
+  package "UseCase" {
+    interface OrderUseCase {
+      + requestOrder(order: Order): void
+      + cancelOrder(order: Order): void
+      + partialCancelOrder(order: Order): void
+    }
+    
+    class DefaultOrderUseCase {
+      - tradeRepository: TradeRepository
+    }
+    
+    interface InventoryUseCase {
+      + checkInventory(id: String): Int
+    }
+    
+    class DefaultInventoryUseCase {
+      - tradeRepository: TradeRepository
+    }
+    
+    interface SalesUseCase {
+      + recordSale(order: Order, price: Long): Boolean
+      + getTotalSalesByItem(itemId: String): Long
+      + getAllSales(): Map<String, Long>
+    }
+    
+    class DefaultSalesUseCase {
+      - saleRepository: SaleRepository
+    }
+  }
+  
+  ' 리포지토리 인터페이스
+  package "Repository Interface" {
+    interface TradeRepository {
+      + saledItem(order: Order): Boolean
+      + canceledItem(order: Order): Boolean
+      + checkInventory(id: String): Int
+    }
+    
+    interface SaleRepository {
+      + recordSale(sale: Sale): Boolean
+      + getTotalSalesByItem(itemId: String): Long
+      + getAllSales(): Map<String, Long>
+    }
+  }
+}
+
+package "Data Layer" {
+  ' 리포지토리 구현체
+  package "Repository Implementation" {
+    class DefaultTradeRepository {
+      - storage: Storage
+    }
+    
+    class DefaultSaleRepository {
+      - sales: ConcurrentHashMap<String, List<SaleEntity>>
+      - saleMapper: SaleMapper
+    }
+  }
+  
+  ' 데이터 모델
+  package "Model" {
+    class ItemEntity {
+      - id: String
+      - name: String
+      - price: Long
+    }
+    
+    class OrderEntity {
+      - id: String
+      - quantity: Int
+    }
+    
+    class SaleEntity {
+      - id: String
+      - itemId: String
+      - quantity: Int
+      - price: Long
+      - totalAmount: Long
+      - isCanceled: Boolean
+    }
+  }
+  
+  ' 스토리지
+  class ShoeStoreStorage {
+    - inventory: ConcurrentHashMap<String, Int>
+    + decreaseInventory(id: String, quantity: Int): Boolean
+    + increaseInventory(id: String, quantity: Int): Boolean
+    + getInventory(id: String): Int
+  }
+  
+  ' 매퍼
+  package "Mapper" {
+    class SaleMapper {
+      + toEntity(sale: Sale): SaleEntity
+      + toDomain(entity: SaleEntity): Sale
+    }
+  }
+}
+
+' 관계 정의
+OrderService --> OrderUseCase
+OrderService --> InventoryUseCase
+OrderService --> SalesUseCase
+
+DefaultOrderUseCase ..|> OrderUseCase
+DefaultOrderUseCase --> TradeRepository
+
+DefaultInventoryUseCase ..|> InventoryUseCase
+DefaultInventoryUseCase --> TradeRepository
+
+DefaultSalesUseCase ..|> SalesUseCase
+DefaultSalesUseCase --> SaleRepository
+
+DefaultTradeRepository ..|> TradeRepository
+DefaultTradeRepository --> ShoeStoreStorage
+
+DefaultSaleRepository ..|> SaleRepository
+DefaultSaleRepository --> SaleMapper
+
+SaleMapper ..> Sale
+SaleMapper ..> SaleEntity
+
+@enduml 
